@@ -3,6 +3,7 @@ import * as mysql from 'mysql';
 import { exec } from 'child_process';
 import * as http from 'http';
 
+//Db config
 const dbConfig = {
     host: 'mydatabase.com',
     user: 'admin',
