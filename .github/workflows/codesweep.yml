@@ -2,14 +2,12 @@ name: AppScan CodeSweep
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: 
+      - '**'   # run on all branches
   pull_request:
     branches:
-      - main
-      - master
-  workflow_dispatch:
+      - '**'   # run on PRs to any branch
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
   scan:
@@ -17,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # fetch full history to avoid Git diff errors
 
       - name: Run AppScan CodeSweep
         uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@v1
@@ -24,3 +24,5 @@ jobs:
           status: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ASOC_KEY: ${{ secrets.ASOC_KEY }}       # if using AppScan Cloud
+          ASOC_SECRET: ${{ secrets.ASOC_SECRET }} # if using AppScan Cloud
